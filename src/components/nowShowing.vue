@@ -26,16 +26,18 @@ export default {
     @finalSelectionMoviesSubmisson="renderMovies"
   ></nowShowingCategories>
 
-  <div class="grid grid-cols-5 gap-6 m-3 p-8">
+  <div
+    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-items-center gap-5 border p-8"
+  >
     <div
       v-for="movie in moviesToRender"
-      class="w-50 h-80 p-4 rounded-lg text-center bg-gray-200 dark:bg-gray-800"
+      class="w-40 h-60 md:w-50 md:h-80 p-4 rounded-lg text-centedr bg-gray-200 dark:bg-gray-800 dark:border"
     >
-      <div class="h-60 overflow-hidden rounded-md">
+      <div class="h-3/4 overflow-hidden rounded-md">
         <img class="w-full h-full object-cover" :src="movie.poster" />
       </div>
 
-      <div class="h-[20%] flex items-center justify-center text-lg font-bold">
+      <div class="h-1/4 flex items-center justify-center text-lg font-bold">
         {{ movie.name }}
       </div>
     </div>

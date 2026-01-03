@@ -49,14 +49,17 @@ export default {
 
 <template>
   <!--Main div for the whole thing-->
-  <div class="flex mt-4 justify-between items-center px-3">
-    <div class="flex flex-wrap">
+  <div
+    class="md:flex md:flex-row-reverse mt-4 justify-between items-center px-3 w-full"
+  >
+    <div class="border p-2 rounded-lg"><input type="text" /></div>
+    <div class="flex overflow-x-auto">
       <!--each button start-->
       <button
         v-for="movie in movieTypes"
         :key="movie"
         @click="clicked(movie)"
-        class="border rounded-lg px-2 py-2 m-3 bg-gray-100 dark:bg-black cursor-pointer"
+        class="dark:border px-2 text-sm rounded-2xl m-3 bg-gray-100 dark:bg-black cursor-pointer"
         :class="
           this.selectedMovieTypes.includes(movie)
             ? 'bg-gray-600 text-white dark:bg-white dark:text-black'
@@ -67,7 +70,5 @@ export default {
       </button>
       <!--each button end-->
     </div>
-
-    <div class="border p-2 rounded-lg"><input type="text" /></div>
   </div>
 </template>
