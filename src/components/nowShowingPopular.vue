@@ -1,14 +1,15 @@
 <script>
 import { movies } from "../data/movies";
 
-
 export default {
   data() {
     return {
       movies,
     };
   },
+
   computed: {
+    //Popular Movies base on data changes
     popularMovies() {
       return this.movies.filter((movie) => movie.rating > 8.5);
     },
@@ -17,6 +18,7 @@ export default {
 </script>
 
 <template>
+  <!--Titles divs statt-->
   <div class="px-5">
     <div class="text-lg md:text-3xl font-bold text-black dark:text-white">
       Now Showing
@@ -26,6 +28,7 @@ export default {
       Popular
     </div>
   </div>
+  <!--Titles divs end-->
 
   <div class="mx-5 flex gap-4 overflow-x-auto snap-x snap-mandatory mt-4">
     <div
