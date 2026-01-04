@@ -17,6 +17,7 @@ export default {
       ],
       //movie type selction in array
       selectedMovieTypes: [],
+      query: "",
     };
   },
 
@@ -36,7 +37,8 @@ export default {
       console.log(this.finalSelectedMovies);
       console.log(this.selectedMovieTypes);
       //emission of selected movie types
-      this.$emit("finalSelectionMoviesSubmisson", this.categorySelectionMovies);
+      this.$emit("finalSelectionMoviesSubmisson", this.searchSelectionMovies);
+      console.log(this.query);
     },
   },
   computed: {
@@ -45,6 +47,19 @@ export default {
       return this.movies.filter((movie) =>
         this.selectedMovieTypes.every((t) => movie.categories.includes(t))
       );
+    },
+    searchSelectionMovies() {
+      return this.categorySelectionMovies.filter((movie) =>
+        movie.name
+          .trim()
+          .toLowerCase()
+          .includes(this.query.trim().toLowerCase())
+      );
+    },
+  },
+  watch: {
+    query() {
+      this.$emit("finalSelectionMoviesSubmisson", this.searchSelectionMovies);
     },
   },
 };
@@ -55,14 +70,16 @@ export default {
   <div
     class="md:flex md:flex-row-reverse mt-4 justify-between items-center px-3 w-full"
   >
-    <div class="border p-2 rounded-lg"><input type="text" /></div>
+    <div class="border p-2 rounded-lg">
+      <input type="text" v-model="query" />
+    </div>
     <div class="flex overflow-x-auto">
       <!--each button start-->
       <button
         v-for="movie in movieTypes"
         :key="movie"
         @click="clicked(movie)"
-        class="border px-2 text-sm rounded-2xl m-3 bg-gray-100 dark:bg-black cursor-pointer"
+        class="px-2 md:py-3 text-sm rounded-2xl m-3 bg-gray-100 dark:bg-black cursor-pointer"
         :class="
           this.selectedMovieTypes.includes(movie)
             ? 'bg-gray-600 text-white dark:bg-white dark:text-black'

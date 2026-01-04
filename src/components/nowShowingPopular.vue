@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-  <!--Titles divs statt-->
+  <!--Titles divs start-->
   <div class="px-5">
     <div class="text-lg md:text-3xl font-bold text-black dark:text-white">
       Now Showing
@@ -34,7 +34,7 @@ export default {
     <div
       v-for="movie in popularMovies"
       :key="movie.id"
-      class="shrink-0 snap-center w-60 md:w-80 rounded-lg bg-gray-100 dark:bg-gray-800"
+      class="shrink-0 snap-center w-60 md:w-80 rounded-lg bg-gray-100 dark:bg-gray-800 cursor-pointer"
     >
       <div class="h-40 md:h-60 overflow-hidden rounded-lg">
         <img
