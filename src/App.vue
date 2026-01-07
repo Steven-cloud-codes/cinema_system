@@ -1,9 +1,8 @@
 <script>
-import NowShowingPopular from "./components/nowShowingPopular.vue";
-import nowShowing from "./components/nowShowing.vue";
+import Home from "./views/Home.vue";
 
 export default {
-  components: { NowShowingPopular, nowShowing },
+  components: { Home },
 
   data() {
     return {
@@ -50,8 +49,8 @@ export default {
         {{ isDark ? " Dark" : "Light" }}
       </button>
     </div>
-
-    <NowShowingPopular />
-    <nowShowing />
+    <router-link to="/">Home</router-link>
+    <router-link to="/movieBooking">Movie booking</router-link>
+    <router-view />
   </div>
 </template>
