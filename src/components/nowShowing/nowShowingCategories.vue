@@ -1,5 +1,5 @@
 <script>
-import { movies } from "../data/movies";
+import { movies } from "../../data/movies";
 export default {
   data() {
     return {

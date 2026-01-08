@@ -1,6 +1,6 @@
 <script>
-import nowShowingPopular from "../components/nowShowingPopular.vue";
-import nowShowingCategories from "../components/nowShowingCategories.vue";
+import nowShowingPopular from "../components/nowShowing/nowShowingPopular.vue";
+import nowShowingCategories from "../components/nowShowing/nowShowingCategories.vue";
 import { movies } from "../data/movies";
 
 export default {
@@ -35,15 +35,18 @@ export default {
   >
     <div
       v-for="movie in moviesToRender"
+      :key="movie.id"
       class="w-40 h-60 md:w-50 md:h-80 p-4 rounded-lg text-centedr bg-gray-200 dark:bg-gray-800 dark:border cursor-pointer"
     >
-      <div class="h-3/4 overflow-hidden rounded-md">
-        <img class="w-full h-full object-cover" :src="movie.poster" />
-      </div>
+      <router-link :to="{ name: 'MovieBooking', params: { id: movie.id } }">
+        <div class="h-3/4 overflow-hidden rounded-md">
+          <img class="w-full h-full object-cover" :src="movie.poster" />
+        </div>
 
-      <div class="h-1/4 flex items-center justify-center text-lg font-bold">
-        {{ movie.name }}
-      </div>
+        <div class="h-1/4 flex items-center justify-center text-lg font-bold">
+          {{ movie.name }}
+        </div></router-link
+      >
     </div>
   </div>
 
