@@ -9,6 +9,11 @@ export default {
       isDark: false,
     };
   },
+  computed: {
+    showThemeButton() {
+      return this.$route.name === "Home";
+    },
+  },
 
   methods: {
     toggleTheme() {
@@ -41,7 +46,7 @@ export default {
     class="min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white"
   >
     <!-- Toggle Button -->
-    <div class="flex justify-end p-4">
+    <div class="flex justify-end p-4" v-if="showThemeButton">
       <button
         @click="toggleTheme"
         class="px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 text-black dark:bg-gray-800 dark:text-white transition"

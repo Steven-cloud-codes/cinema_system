@@ -43,7 +43,9 @@ export default {
           <img class="w-full h-full object-cover" :src="movie.poster" />
         </div>
 
-        <div class="h-1/4 flex items-center justify-center text-lg font-bold">
+        <div
+          class="h-1/4 flex items-center justify-center text-[100%] font-bold"
+        >
           {{ movie.name }}
         </div></router-link
       >
