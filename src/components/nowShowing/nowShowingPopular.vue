@@ -36,17 +36,20 @@ export default {
       :key="movie.id"
       class="shrink-0 snap-center w-60 md:w-80 rounded-lg bg-gray-100 dark:bg-gray-800 cursor-pointer"
     >
-      <div class="h-40 md:h-60 overflow-hidden rounded-lg">
-        <img
-          class="w-full h-full object-cover"
-          :src="movie.poster"
-          :alt="movie.name"
-        />
-      </div>
+      <router-link :to="{ name: 'MovieBooking', params: { id: movie.id } }">
+        <div class="h-40 md:h-60 overflow-hidden rounded-lg">
+          <img
+            class="w-full h-full object-cover"
+            :src="movie.poster"
+            :alt="movie.name"
+          />
+        </div>
 
-      <div class="p-3 text-lg text-black dark:text-white">
-        {{ movie.name }}
-      </div>
+        <div class="p-3 text-lg text-black dark:text-white">
+          {{ movie.name }}
+        </div></router-link
+      >
     </div>
+    >
   </div>
 </template>
