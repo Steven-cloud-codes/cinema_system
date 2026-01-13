@@ -1,11 +1,16 @@
 <script>
 import { movies } from "../data/movies";
+import seats from "../components/Seats.vue";
 
 export default {
+  components: {
+    seats,
+  },
   data() {
     return {
       movieId: Number(this.$route.params.id), // convert to number
       datePicked: null,
+      timePicked: null,
     };
   },
   methods: {
@@ -14,6 +19,9 @@ export default {
     },
     dateClicked(index) {
       this.datePicked = index;
+    },
+    timeClicked(index) {
+      this.timePicked = index;
     },
   },
 
@@ -118,6 +126,7 @@ export default {
       <div class="text-lg font-bold my-2">Times</div>
       <div class="flex justify-center gap-4">
         <div
+          @click="timeClicked(i)"
           v-for="(time, i) in selectedTimes"
           :key="i"
           class="border rounded-md px-4 py-2 mb-10 hover:text-black hover:bg-white cursor-pointer"
@@ -126,5 +135,6 @@ export default {
         </div>
       </div>
     </div>
+    <seats v-if="timePicked !== null"></seats>
   </div>
 </template>
