@@ -4,14 +4,64 @@ export default {
   data() {
     return {
       seatLayout,
+      selectedSeats: [],
     };
   },
   methods: {
     click() {
-      console.log(this.seatLayout);
+      console.log(this.key);
+      console.log(this.selectedSeats);
+    },
+    seatSelect(seat) {
+      if (this.takenSeats.includes(seat)) {
+        alert("this seat is already taken.");
+        return;
+      }
+
+      if (this.selectedSeats.includes(seat)) {
+        this.selectedSeats = this.selectedSeats.filter(
+          (selectedSeat) => selectedSeat !== seat,
+        );
+      } else {
+        this.selectedSeats.push(seat);
+      }
+      console.log(this.selectedSeats);
+    },
+    book() {
+      //get the key
+      const showKey = this.key;
+
+      //if the bookings is set take the item , if not set empty {}
+      const allBookings = JSON.parse(localStorage.getItem("bookings")) || {};
+
+      //getting the selected seats from that key , if that key is not selected set empty array
+      const existingSeats = allBookings[this.key] || [];
+
+      //updated seats from the previous + slected Seats
+      const updatedSeats = [...existingSeats, ...this.selectedSeats];
+
+      //from the all bookings pick the showkey and put the updated seats.
+      allBookings[showKey] = updatedSeats;
+
+      //set the data back to the local storage
+      localStorage.setItem("bookings", JSON.stringify(allBookings));
+
+      //empty the selectedSeats
+      this.selectedSeats = [];
+
+      location.reload();
     },
   },
-  computed: {},
+  computed: {
+    key() {
+      return `${this.movieId}_${this.datePicked}_${this.timePicked}`;
+    },
+    takenSeats() {
+      const bookings = JSON.parse(localStorage.getItem("bookings")) || {};
+      return bookings[this.key] || [];
+    },
+  },
+  props: ["movieId", "datePicked", "timePicked"],
 };
 </script>
 <template>
@@ -56,14 +106,26 @@ export default {
           <div v-if="seat === null" class="w-6 h-6 sm:w-8 sm:h-8"></div>
 
           <!-- seat -->
+
           <div
             v-else
-            class="w-6 h-6 sm:w-8 sm:h-8 rounded-md bg-gray-800 text-white flex items-center justify-center text-[10px] sm:text-xs cursor-pointer hover:bg-green-500 transition"
+            @click="seatSelect(seat)"
+            :class="[
+              'w-6 h-6 sm:w-8 sm:h-8 rounded-md',
+              'flex items-center justify-center text-[10px] sm:text-xs',
+              {
+                'bg-red-500 cursor-not-allowed': takenSeats.includes(seat),
+                'bg-green-500 cursor-pointer': selectedSeats.includes(seat),
+                'bg-gray-800 cursor-pointer hover:bg-green-300':
+                  !takenSeats.includes(seat) && !selectedSeats.includes(seat),
+              },
+            ]"
           >
             {{ seat }}
           </div>
         </div>
       </div>
     </div>
+    <button class="bg-blue-600 p-3 rounded-lg" @click="book">Book</button>
   </div>
 </template>

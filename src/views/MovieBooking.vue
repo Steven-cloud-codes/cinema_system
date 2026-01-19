@@ -9,6 +9,7 @@ export default {
   data() {
     return {
       movieId: Number(this.$route.params.id), // convert to number
+      datePickedIndex: null,
       datePicked: null,
       timePicked: null,
     };
@@ -17,11 +18,12 @@ export default {
     goBack() {
       this.$router.back();
     },
-    dateClicked(index) {
-      this.datePicked = index;
+    dateClicked(date, index) {
+      this.datePicked = date;
+      this.datePickedIndex = index;
     },
-    timeClicked(index) {
-      this.timePicked = index;
+    timeClicked(time) {
+      this.timePicked = time;
     },
   },
 
@@ -35,7 +37,7 @@ export default {
     },
     selectedTimes() {
       if (this.datePicked === null) return [];
-      return this.selectedMovie.showDates[this.datePicked].times;
+      return this.selectedMovie.showDates[this.datePickedIndex].times;
     },
   },
 };
@@ -112,7 +114,7 @@ export default {
       <div class="text-lg font-bold mb-3">Dates</div>
       <div class="flex justify-center">
         <div
-          @click="dateClicked(index)"
+          @click="dateClicked(date, index)"
           v-for="(date, index) in dateToRender"
           :key="index"
           class="border rounded-md p-3 mx-3 hover:bg-white hover:text-black cursor-pointer"
@@ -126,7 +128,7 @@ export default {
       <div class="text-lg font-bold my-2">Times</div>
       <div class="flex justify-center gap-4">
         <div
-          @click="timeClicked(i)"
+          @click="timeClicked(time)"
           v-for="(time, i) in selectedTimes"
           :key="i"
           class="border rounded-md px-4 py-2 mb-10 hover:text-black hover:bg-white cursor-pointer"
@@ -135,6 +137,11 @@ export default {
         </div>
       </div>
     </div>
-    <seats v-if="timePicked !== null"></seats>
+    <seats
+      v-if="timePicked !== null"
+      :movieId="movieId"
+      :datePicked="datePicked"
+      :timePicked="timePicked"
+    ></seats>
   </div>
 </template>
