@@ -1,10 +1,12 @@
 <script>
 import { movies } from "../data/movies";
 import seats from "../components/Seats.vue";
+import BookingSummary from "../components/BookingSummary.vue";
 
 export default {
   components: {
     seats,
+    BookingSummary,
   },
   data() {
     return {
@@ -12,9 +14,15 @@ export default {
       datePickedIndex: null,
       datePicked: null,
       timePicked: null,
+      selectedSeats: [],
     };
   },
   methods: {
+    selectedSeatsGet(seats) {
+      this.selectedSeats = [];
+      this.selectedSeats.push(...seats);
+      console.log(this.selectedSeats);
+    },
     goBack() {
       this.$router.back();
     },
@@ -24,6 +32,33 @@ export default {
     },
     timeClicked(time) {
       this.timePicked = time;
+    },
+    book() {
+      //get the key
+      const showKey = this.key;
+
+      //if the bookings is set, take the item , if not set empty {}
+      const allBookings = JSON.parse(localStorage.getItem("bookings")) || {};
+
+      //getting the selected seats from that key , if that key is not selected set empty array
+      const existingSeats = allBookings[this.key] || [];
+
+      //updated seats from the previous + slected Seats
+      const updatedSeats = [...existingSeats, ...this.selectedSeats];
+
+      //from the all bookings pick the showkey and put the updated seats.
+      allBookings[showKey] = updatedSeats;
+
+      //set the data back to the local storage
+      localStorage.setItem("bookings", JSON.stringify(allBookings));
+
+      //empty the selectedSeats
+      this.selectedSeats = [];
+
+      location.reload();
+    },
+    comfirmBooking() {
+      this.book();
     },
   },
 
@@ -39,12 +74,15 @@ export default {
       if (this.datePicked === null) return [];
       return this.selectedMovie.showDates[this.datePickedIndex].times;
     },
+    key() {
+      return `${this.movieId}_${this.datePicked}_${this.timePicked}`;
+    },
   },
 };
 </script>
 
 <template>
-  <div class="" v-if="selectedMovie">
+  <div class="relative" v-if="selectedMovie">
     <!--Main small banner + movie name display start-->
     <div class="flex text-center py-4 font-bold rounded-b-lg items-center p-3">
       <button @click="goBack" class="w-8 cursor-pointer">
@@ -118,6 +156,7 @@ export default {
           v-for="(date, index) in dateToRender"
           :key="index"
           class="border rounded-md p-3 mx-3 hover:bg-white hover:text-black cursor-pointer"
+          :class="this.datePicked === date ? 'bg-white text-black' : ''"
         >
           {{ date }}
         </div>
@@ -132,16 +171,24 @@ export default {
           v-for="(time, i) in selectedTimes"
           :key="i"
           class="border rounded-md px-4 py-2 mb-10 hover:text-black hover:bg-white cursor-pointer"
+          :class="this.timePicked === time ? 'bg-white text-black' : ''"
         >
           {{ time }}
         </div>
       </div>
     </div>
     <seats
+      @selected-seats-emission="selectedSeatsGet"
       v-if="timePicked !== null"
       :movieId="movieId"
       :datePicked="datePicked"
       :timePicked="timePicked"
     ></seats>
+    <BookingSummary
+      @comfirm-booking="comfirmBooking"
+      :selectedMovie="selectedMovie"
+      :selectedSeats="selectedSeats"
+      class=""
+    ></BookingSummary>
   </div>
 </template>

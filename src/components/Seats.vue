@@ -22,37 +22,16 @@ export default {
         this.selectedSeats = this.selectedSeats.filter(
           (selectedSeat) => selectedSeat !== seat,
         );
+        this.$emit("selectedSeatsEmission", this.selectedSeats);
       } else {
         this.selectedSeats.push(seat);
+        this.$emit("selectedSeatsEmission", this.selectedSeats);
       }
       console.log(this.selectedSeats);
     },
-    book() {
-      //get the key
-      const showKey = this.key;
-
-      //if the bookings is set take the item , if not set empty {}
-      const allBookings = JSON.parse(localStorage.getItem("bookings")) || {};
-
-      //getting the selected seats from that key , if that key is not selected set empty array
-      const existingSeats = allBookings[this.key] || [];
-
-      //updated seats from the previous + slected Seats
-      const updatedSeats = [...existingSeats, ...this.selectedSeats];
-
-      //from the all bookings pick the showkey and put the updated seats.
-      allBookings[showKey] = updatedSeats;
-
-      //set the data back to the local storage
-      localStorage.setItem("bookings", JSON.stringify(allBookings));
-
-      //empty the selectedSeats
-      this.selectedSeats = [];
-
-      location.reload();
-    },
   },
   computed: {
+    //this is the special indentifier key for booked seats for every movie and times
     key() {
       return `${this.movieId}_${this.datePicked}_${this.timePicked}`;
     },
@@ -126,6 +105,5 @@ export default {
         </div>
       </div>
     </div>
-    <button class="bg-blue-600 p-3 rounded-lg" @click="book">Book</button>
   </div>
 </template>
