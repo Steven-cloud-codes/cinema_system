@@ -13,6 +13,7 @@ export const movies = [
       { date: "2025-01-06", times: ["16:00", "20:00"] }
     ],
     price: 12.5,
+    vipPrice: 18.5,  // +$6 premium
     availableSeats: 80,
     description: "Astronauts travel through a wormhole in space to save humanity from extinction."
   },
@@ -31,6 +32,7 @@ export const movies = [
       { date: "2025-01-07", times: ["17:00", "21:30"] }
     ],
     price: 11,
+    vipPrice: 16.5,  // +$5.50 premium
     availableSeats: 60,
     description: "A master thief invades dreams to steal secrets and perform an impossible heist."
   },
@@ -46,6 +48,7 @@ export const movies = [
     cinemaRoom: 3,
     showDates: [{ date: "2025-01-06", times: ["14:30", "18:00", "21:45"] }],
     price: 10,
+    vipPrice: 15.0,  // +$5 premium
     availableSeats: 100,
     description: "Batman faces the Joker, a villain who thrives on chaos and anarchy."
   },
@@ -64,6 +67,7 @@ export const movies = [
       { date: "2025-01-08", times: ["20:00"] }
     ],
     price: 13,
+    vipPrice: 19.5,  // +$6.50 premium
     availableSeats: 90,
     description: "A soldier becomes torn between his mission and protecting an alien world."
   },
@@ -79,8 +83,9 @@ export const movies = [
     cinemaRoom: 2,
     showDates: [{ date: "2025-01-06", times: ["16:15", "19:45"] }],
     price: 10.5,
+    vipPrice: 15.75, // +$5.25 premium
     availableSeats: 50,
-    description: "A troubled man spirals into madness and becomes Gotham’s most feared criminal."
+    description: "A troubled man spirals into madness and becomes Gotham's most feared criminal."
   },
 
   {
@@ -94,8 +99,9 @@ export const movies = [
     cinemaRoom: 1,
     showDates: [{ date: "2025-01-07", times: ["15:00", "19:00"] }],
     price: 14,
+    vipPrice: 21.0,  // +$7 premium
     availableSeats: 120,
-    description: "The Avengers assemble one last time to undo Thanos’ catastrophic actions."
+    description: "The Avengers assemble one last time to undo Thanos' catastrophic actions."
   },
 
   {
@@ -109,6 +115,7 @@ export const movies = [
     cinemaRoom: 5,
     showDates: [{ date: "2025-01-08", times: ["18:00"] }],
     price: 9,
+    vipPrice: 13.5,  // +$4.50 premium
     availableSeats: 70,
     description: "A tragic love story unfolds aboard the ill-fated Titanic."
   },
@@ -124,6 +131,7 @@ export const movies = [
     cinemaRoom: 3,
     showDates: [{ date: "2025-01-09", times: ["20:30"] }],
     price: 10,
+    vipPrice: 15.0,  // +$5 premium
     availableSeats: 85,
     description: "A betrayed Roman general rises as a gladiator to seek revenge."
   },
@@ -139,6 +147,7 @@ export const movies = [
     cinemaRoom: 4,
     showDates: [{ date: "2025-01-10", times: ["18:45"] }],
     price: 11,
+    vipPrice: 16.5,  // +$5.50 premium
     availableSeats: 95,
     description: "A hacker discovers reality is a simulation controlled by machines."
   },
@@ -154,6 +163,7 @@ export const movies = [
     cinemaRoom: 2,
     showDates: [{ date: "2025-01-11", times: ["17:00"] }],
     price: 9.5,
+    vipPrice: 14.25, // +$4.75 premium
     availableSeats: 60,
     description: "A simple man lives an extraordinary life through love and kindness."
   },
@@ -169,6 +179,7 @@ export const movies = [
     cinemaRoom: 1,
     showDates: [{ date: "2025-01-12", times: ["19:00"] }],
     price: 12,
+    vipPrice: 18.0,  // +$6 premium
     availableSeats: 75,
     description: "The powerful story of a mafia family and its legacy of crime."
   },
@@ -184,6 +195,7 @@ export const movies = [
     cinemaRoom: 5,
     showDates: [{ date: "2025-01-12", times: ["21:00"] }],
     price: 11,
+    vipPrice: 16.5,  // +$5.50 premium
     availableSeats: 55,
     description: "A poor family schemes to infiltrate a wealthy household with deadly consequences."
   },
@@ -199,6 +211,7 @@ export const movies = [
     cinemaRoom: 4,
     showDates: [{ date: "2025-01-13", times: ["20:00"] }],
     price: 9,
+    vipPrice: 13.5,  // +$4.50 premium
     availableSeats: 65,
     description: "A young drummer faces brutal mentorship in pursuit of musical greatness."
   },
@@ -214,6 +227,7 @@ export const movies = [
     cinemaRoom: 3,
     showDates: [{ date: "2025-01-14", times: ["22:00"] }],
     price: 11,
+    vipPrice: 16.5,  // +$5.50 premium
     availableSeats: 90,
     description: "Survivors flee a tyrant in a high-octane post-apocalyptic chase."
   },
@@ -229,6 +243,7 @@ export const movies = [
     cinemaRoom: 2,
     showDates: [{ date: "2025-01-15", times: ["19:30"] }],
     price: 10,
+    vipPrice: 15.0,  // +$5 premium
     availableSeats: 70,
     description: "Two dreamers fall in love while chasing success in Los Angeles."
   },
@@ -244,8 +259,9 @@ export const movies = [
     cinemaRoom: 5,
     showDates: [{ date: "2025-01-16", times: ["18:00"] }],
     price: 13,
+    vipPrice: 19.5,  // +$6.50 premium
     availableSeats: 110,
-    description: "A noble family becomes entangled in a war over the galaxy’s most valuable resource."
+    description: "A noble family becomes entangled in a war over the galaxy's most valuable resource."
   },
 
   {
@@ -259,6 +275,7 @@ export const movies = [
     cinemaRoom: 1,
     showDates: [{ date: "2025-01-17", times: ["21:30"] }],
     price: 10,
+    vipPrice: 15.0,  // +$5 premium
     availableSeats: 85,
     description: "An office worker forms an underground fight club with explosive consequences."
   },
@@ -274,6 +291,7 @@ export const movies = [
     cinemaRoom: 2,
     showDates: [{ date: "2025-01-18", times: ["20:00"] }],
     price: 10,
+    vipPrice: 15.0,  // +$5 premium
     availableSeats: 95,
     description: "Two imprisoned men bond over years, finding hope and redemption."
   },
@@ -289,6 +307,7 @@ export const movies = [
     cinemaRoom: 4,
     showDates: [{ date: "2025-01-19", times: ["19:00"] }],
     price: 12,
+    vipPrice: 18.0,  // +$6 premium
     availableSeats: 130,
     description: "Spider-Man faces villains from across the multiverse."
   },
@@ -304,6 +323,7 @@ export const movies = [
     cinemaRoom: 3,
     showDates: [{ date: "2025-01-20", times: ["18:30"] }],
     price: 14,
+    vipPrice: 21.0,  // +$7 premium
     availableSeats: 100,
     description: "The story of J. Robert Oppenheimer and the creation of the atomic bomb."
   }

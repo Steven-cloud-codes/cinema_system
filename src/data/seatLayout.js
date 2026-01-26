@@ -23,3 +23,4 @@ export const seatLayout = [
   // Row H
   ["H1","H2", null, "H3","H4","H5","H6", null, "H7","H8"],
 ];
+

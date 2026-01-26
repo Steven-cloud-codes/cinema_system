@@ -28,6 +28,7 @@ export default {
         this.$emit("selectedSeatsEmission", this.selectedSeats);
       }
       console.log(this.selectedSeats);
+      console.log("vip seats are " + this.vipSeats);
     },
   },
   computed: {
@@ -39,10 +40,114 @@ export default {
       const bookings = JSON.parse(localStorage.getItem("bookings")) || {};
       return bookings[this.key] || [];
     },
+
+    //vip seats return
+    vipSeats() {
+      const vipSeats = []; //empty array
+
+      this.seatLayout.forEach((row) => {
+        row.forEach((seat) => {
+          if (
+            seat &&
+            (seat.includes("D") || seat.includes("E"))
+          ) //check if the seat is null , else check if the seat includes D or E
+          {
+            const lastChar = seat.slice(-1); //get the last char of the seat no , to pick the number 3 to 6
+            if (["3", "4", "5", "6"].includes(lastChar)) {
+              vipSeats.push(seat);
+            }
+          }
+        });
+      });
+
+      return vipSeats;
+    },
+
+    seatStatus() {
+      return (seat) => {
+        if (this.takenSeats.includes(seat)) return "booked";
+        if (this.selectedSeats.includes(seat)) return "selected";
+        if (this.vipSeats.includes(seat)) return "vip-available"; // FIXED: typo
+        return "standard-available";
+      };
+    },
+
+    isVipSeat() {
+      return (seat) => {
+        return this.vipSeats.includes(seat);
+      };
+    },
+
+    isSeatAvailable() {
+      return (seat) => {
+        return !this.takenSeats.includes(seat);
+      };
+    },
+
+    baseClasses() {
+      return (seat) => {
+        const status = this.seatStatus(seat);
+
+        return {
+          // Booked
+          "bg-red-500 cursor-not-allowed opacity-60": status === "booked",
+
+          // Selected (Standard)
+          "bg-green-500 cursor-pointer":
+            status === "selected" && !this.isVipSeat(seat),
+
+          // Selected (VIP)
+          "bg-gradient-to-br from-green-500 to-emerald-500 cursor-pointer":
+            status === "selected" && this.isVipSeat(seat),
+
+          // Available (VIP)
+          "bg-gradient-to-br from-amber-500 to-yellow-500 cursor-pointer":
+            status === "vip-available",
+
+          // Available (Standard)
+          "bg-gray-800 cursor-pointer hover:bg-green-300":
+            status === "standard-available",
+        };
+      };
+    },
+
+    // VIP-specific enhancements
+    vipEnhancements() {
+      return (seat) => {
+        if (!this.isVipSeat(seat)) return {};
+
+        const isAvailable = this.isSeatAvailable(seat);
+        const isSelected = this.seatStatus(seat) === "selected";
+
+        return {
+          "border-2 border-yellow-400": true, // Always border for VIP
+          "shadow-md": isAvailable,
+          "hover:shadow-lg": isAvailable && !isSelected,
+        };
+      };
+    },
+
+    // VIP badge classes
+    vipBadgeClasses() {
+      return (seat) => {
+        if (!this.isVipSeat(seat) || !this.isSeatAvailable(seat)) return [];
+
+        const isSelected = this.seatStatus(seat) === "selected";
+
+        return [
+          "absolute -top-1 -right-1 text-[6px] rounded-full w-3 h-3",
+          "flex items-center justify-center border",
+          isSelected
+            ? "bg-yellow-300 text-black border-yellow-500"
+            : "bg-yellow-500 text-black border-yellow-600",
+        ];
+      };
+    },
   },
   props: ["movieId", "datePicked", "timePicked"],
 };
 </script>
+
 <template>
   <div
     class="w-full flex flex-col items-center p-4 sm:p-6 border-t-2 border-dashed"
@@ -85,22 +190,30 @@ export default {
           <div v-if="seat === null" class="w-6 h-6 sm:w-8 sm:h-8"></div>
 
           <!-- seat -->
-
           <div
             v-else
             @click="seatSelect(seat)"
             :class="[
               'w-6 h-6 sm:w-8 sm:h-8 rounded-md',
               'flex items-center justify-center text-[10px] sm:text-xs',
-              {
-                'bg-red-500 cursor-not-allowed': takenSeats.includes(seat),
-                'bg-green-500 cursor-pointer': selectedSeats.includes(seat),
-                'bg-gray-800 cursor-pointer hover:bg-green-300':
-                  !takenSeats.includes(seat) && !selectedSeats.includes(seat),
-              },
+              'relative transition-all duration-200',
+
+              // Base classes based on status
+              baseClasses(seat),
+
+              // VIP enhancements (additive)
+              vipEnhancements(seat),
             ]"
           >
             {{ seat }}
+
+            <!-- VIP badge using computed -->
+            <span
+              v-if="isVipSeat(seat) && isSeatAvailable(seat)"
+              :class="vipBadgeClasses(seat)"
+            >
+              ⭐
+            </span>
           </div>
         </div>
       </div>

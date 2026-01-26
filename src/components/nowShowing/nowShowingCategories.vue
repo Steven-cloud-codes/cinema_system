@@ -31,7 +31,7 @@ export default {
       } else {
         //conditonal if the category is  selected
         this.selectedMovieTypes = this.selectedMovieTypes.filter(
-          (movieType) => movieType != movie
+          (movieType) => movieType != movie,
         );
       }
       console.log(this.finalSelectedMovies);
@@ -45,7 +45,7 @@ export default {
     //changes base on selected movie types
     categorySelectionMovies() {
       return this.movies.filter((movie) =>
-        this.selectedMovieTypes.every((t) => movie.categories.includes(t))
+        this.selectedMovieTypes.every((t) => movie.categories.includes(t)),
       );
     },
     searchSelectionMovies() {
@@ -53,7 +53,7 @@ export default {
         movie.name
           .trim()
           .toLowerCase()
-          .includes(this.query.trim().toLowerCase())
+          .includes(this.query.trim().toLowerCase()),
       );
     },
   },
