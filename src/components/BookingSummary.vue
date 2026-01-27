@@ -9,7 +9,7 @@ export default {
       this.$emit("comfirmBooking");
     },
   },
-  props: ["selectedMovie", "selectedSeats"],
+  props: ["selectedMovie", "selectedSeats", "vipSeats"],
   computed: {
     totalPrice() {
       return this.selectedMovie.price * this.selectedSeats.length;
@@ -43,18 +43,29 @@ export default {
 
     <!-- Desktop content (hidden on mobile) -->
     <div class="hidden lg:block mt-4">
-      <div class="text-gray-300 mb-2">
-        Selected {{ selectedSeats.length }} seat(s)
+      <div>
+        <div class="flex gap-2 justify-between font-bold border-b py-3 mb-3">
+          <span>Seat</span>
+          <span>Type</span>
+          <span>Price</span>
+        </div>
+        <div v-for="seat in selectedSeats">
+          <div
+            v-if="vipSeats.includes(seat)"
+            class="flex gap-2 justify-between"
+          >
+            <span class="text-yellow-500">{{ seat }}</span>
+            <span>⭐ Vip </span>
+            <span>${{ selectedMovie.vipPrice }}</span>
+          </div>
+          <div v-else class="flex gap-2 justify-between">
+            <span>{{ seat }}</span>
+            <span> Standard </span>
+            <span>${{ selectedMovie.price }}</span>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-wrap gap-2 mb-4">
-        <span
-          v-for="seat in selectedSeats"
-          :key="seat"
-          class="bg-gray-800 px-3 py-1.5 rounded text-gray-100"
-        >
-          {{ seat }}
-        </span>
-      </div>
+
       <div class="text-2xl font-bold mb-6 text-yellow-400">
         Total: ${{ totalPrice }}
       </div>

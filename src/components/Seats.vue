@@ -31,6 +31,9 @@ export default {
       console.log("vip seats are " + this.vipSeats);
     },
   },
+  mounted() {
+    this.$emit("vip-seats", this.vipSeats);
+  },
   computed: {
     //this is the special indentifier key for booked seats for every movie and times
     key() {

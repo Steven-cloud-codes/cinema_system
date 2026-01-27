@@ -15,9 +15,13 @@ export default {
       datePicked: null,
       timePicked: null,
       selectedSeats: [],
+      vipSeats: [],
     };
   },
   methods: {
+    vipSeatsSubmit(seats) {
+      this.vipSeats = seats;
+    },
     selectedSeatsGet(seats) {
       this.selectedSeats = [];
       this.selectedSeats.push(...seats);
@@ -180,6 +184,7 @@ export default {
     <seats
       @selected-seats-emission="selectedSeatsGet"
       v-if="timePicked !== null"
+      @vip-seats="vipSeatsSubmit"
       :movieId="movieId"
       :datePicked="datePicked"
       :timePicked="timePicked"
@@ -188,6 +193,7 @@ export default {
       @comfirm-booking="comfirmBooking"
       :selectedMovie="selectedMovie"
       :selectedSeats="selectedSeats"
+      :vipSeats="vipSeats"
       class=""
     ></BookingSummary>
   </div>
