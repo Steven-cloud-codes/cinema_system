@@ -29,6 +29,7 @@ export default {
       }
       console.log(this.selectedSeats);
       console.log("vip seats are " + this.vipSeats);
+      console.log(this.selectedSeats);
     },
   },
   mounted() {
@@ -96,19 +97,19 @@ export default {
           "bg-red-500 cursor-not-allowed opacity-60": status === "booked",
 
           // Selected (Standard)
-          "bg-green-500 cursor-pointer":
+          "bg-green-500 cursor-pointer ":
             status === "selected" && !this.isVipSeat(seat),
 
           // Selected (VIP)
-          "bg-gradient-to-br from-green-500 to-emerald-500 cursor-pointer":
+          "bg-gradient-to-br from-green-500 to-emerald-500 cursor-pointer ":
             status === "selected" && this.isVipSeat(seat),
 
           // Available (VIP)
-          "bg-gradient-to-br from-amber-500 to-yellow-500 cursor-pointer":
+          "bg-gradient-to-br from-amber-500 to-yellow-500 cursor-pointer  ":
             status === "vip-available",
 
           // Available (Standard)
-          "bg-gray-800 cursor-pointer hover:bg-green-300":
+          "bg-gray-800 cursor-pointer hover:bg-green-300  ":
             status === "standard-available",
         };
       };
@@ -147,7 +148,20 @@ export default {
       };
     },
   },
-  props: ["movieId", "datePicked", "timePicked"],
+  props: ["movieId", "datePicked", "timePicked", "seatToCancel"],
+  props: ["movieId", "datePicked", "timePicked", "seatToCancel"], // CHANGED: seatToCancel
+
+  watch: {
+    seatToCancel(newSeat) {
+      if (newSeat) {
+        // Remove single seat
+        this.selectedSeats = this.selectedSeats.filter(
+          (seat) => seat !== newSeat,
+        );
+        this.$emit("selectedSeatsEmission", this.selectedSeats);
+      }
+    },
+  },
 };
 </script>
 
@@ -197,7 +211,7 @@ export default {
             v-else
             @click="seatSelect(seat)"
             :class="[
-              'w-6 h-6 sm:w-8 sm:h-8 rounded-md',
+              'w-6 h-6 sm:w-8 sm:h-8 rounded-md text-white ',
               'flex items-center justify-center text-[10px] sm:text-xs',
               'relative transition-all duration-200',
 

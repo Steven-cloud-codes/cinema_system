@@ -8,6 +8,10 @@ export default {
     comfirmBooking() {
       this.$emit("comfirmBooking");
     },
+    cancelSelectedSeat(seat) {
+      this.$emit("cancelSelectedSeat", seat);
+      console.log("cancel seat is" + seat);
+    },
   },
   props: ["selectedMovie", "selectedSeats", "vipSeats"],
   computed: {
@@ -44,24 +48,42 @@ export default {
     <!-- Desktop content (hidden on mobile) -->
     <div class="hidden lg:block mt-4">
       <div>
+        <!-- ADD 4TH COLUMN HEADER FOR BUTTON -->
         <div class="flex gap-2 justify-between font-bold border-b py-3 mb-3">
           <span>Seat</span>
           <span>Type</span>
           <span>Price</span>
+          <span class="w-5"></span>
+          <!-- Empty header for button column -->
         </div>
-        <div v-for="seat in selectedSeats">
+
+        <div v-for="seat in selectedSeats" :key="seat" class="my-2">
           <div
             v-if="vipSeats.includes(seat)"
             class="flex gap-2 justify-between"
           >
             <span class="text-yellow-500">{{ seat }}</span>
-            <span>⭐ Vip </span>
+            <span>⭐ Vip</span>
             <span>${{ selectedMovie.vipPrice }}</span>
+            <!-- Button stays here -->
+            <button
+              @click="cancelSelectedSeat(seat)"
+              class="w-5 h-5 rounded-full border border-gray-400 text-gray-600 hover:border-red-400 hover:text-red-500 bg-transparent flex justify-center items-center cursor-pointer"
+            >
+              ×
+            </button>
           </div>
           <div v-else class="flex gap-2 justify-between">
             <span>{{ seat }}</span>
-            <span> Standard </span>
+            <span>Standard</span>
             <span>${{ selectedMovie.price }}</span>
+            <!-- Button stays here -->
+            <button
+              @click="cancelSelectedSeat(seat)"
+              class="w-5 h-5 rounded-full border border-gray-400 text-gray-600 hover:border-red-400 hover:text-red-500 bg-transparent flex justify-center items-center cursor-pointer"
+            >
+              ×
+            </button>
           </div>
         </div>
       </div>
@@ -70,7 +92,6 @@ export default {
         Total: ${{ totalPrice }}
       </div>
     </div>
-
     <div class="flex justify-center">
       <button
         @click="comfirmBooking"

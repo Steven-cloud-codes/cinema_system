@@ -16,6 +16,7 @@ export default {
       timePicked: null,
       selectedSeats: [],
       vipSeats: [],
+      seatToCancel: null,
     };
   },
   methods: {
@@ -63,6 +64,20 @@ export default {
     },
     comfirmBooking() {
       this.book();
+    },
+    cancelSelectedSeat(seat) {
+      // 1. Set seat to cancel (single seat ID, not array)
+      this.seatToCancel = seat;
+
+      // 2. FIXED: Add return statement
+      this.selectedSeats = this.selectedSeats.filter((s) => {
+        return s !== seat;
+      });
+
+      // 3. Reset after Vue updates
+      this.$nextTick(() => {
+        this.seatToCancel = null;
+      });
     },
   },
 
@@ -185,11 +200,13 @@ export default {
       @selected-seats-emission="selectedSeatsGet"
       v-if="timePicked !== null"
       @vip-seats="vipSeatsSubmit"
+      :seatToCancel="seatToCancel"
       :movieId="movieId"
       :datePicked="datePicked"
       :timePicked="timePicked"
     ></seats>
     <BookingSummary
+      @cancel-selected-seat="cancelSelectedSeat"
       @comfirm-booking="comfirmBooking"
       :selectedMovie="selectedMovie"
       :selectedSeats="selectedSeats"

@@ -11,7 +11,6 @@ export default {
   data() {
     return {
       moviesToRender: movies,
-      message: "hi",
     };
   },
   methods: {
@@ -36,7 +35,7 @@ export default {
     <div
       v-for="movie in moviesToRender"
       :key="movie.id"
-      class="w-40 h-60 md:w-50 md:h-80 p-4 rounded-lg text-centedr bg-gray-200 dark:bg-gray-800 dark:border cursor-pointer"
+      class="w-40 h-60 md:w-50 md:h-80 p-4 rounded-lg text-center bg-gray-200 dark:bg-gray-800 dark:border cursor-pointer"
     >
       <router-link :to="{ name: 'MovieBooking', params: { id: movie.id } }">
         <div class="h-3/4 overflow-hidden rounded-md">
